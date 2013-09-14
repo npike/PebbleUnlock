@@ -6,7 +6,6 @@ import android.app.admin.DeviceAdminReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Sample implementation of a DeviceAdminReceiver. Your controller must provide
@@ -20,7 +19,7 @@ public class PebbleUnlockDeviceAdminReceiver extends DeviceAdminReceiver {
 
 	void showToast(Context context, String msg) {
 		String status = context.getString(R.string.admin_receiver_status, msg);
-		Toast.makeText(context, status, Toast.LENGTH_SHORT).show();
+		//Toast.makeText(context, status, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

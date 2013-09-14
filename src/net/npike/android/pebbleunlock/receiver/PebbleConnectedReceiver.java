@@ -7,25 +7,23 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class PebbleConnectedReceiver extends PebbleUnlockReceiver {
-    private static final String TAG = "PebbleConnectionReceiver";
+	private static final String TAG = "PebbleConnectionReceiver";
 
 	@Override
 	public void onPebbleAction(Context context, String pebbleAddress) {
-		Log.d(TAG, "Pebble "+pebbleAddress+" connected.");
-		
+		Log.d(TAG, "Pebble " + pebbleAddress + " connected.");
+
 		resetPassword(context, "");
-		
+
 		long when = System.currentTimeMillis();
 
 		// Package intent with Alert string data set.
 		Intent notificationIntent = new Intent(context, PrefActivity.class);
 		notificationIntent.setAction(Intent.ACTION_VIEW);
-
 
 		// set intent so it does not start a new activity
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -35,20 +33,20 @@ public class PebbleConnectedReceiver extends PebbleUnlockReceiver {
 				notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(
-				context).setContentTitle("Pebble Unlock")
-				.setContentText("Your Pebble is currently connected.  Passcode disabled.").setTicker("Pebble Unlock")
+				context)
+				.setContentTitle("Pebble Unlock")
+				.setContentText(
+						"Your Pebble is currently connected.  Passcode disabled.")
 				.setWhen(when).setContentIntent(pendingIntent)
-				.setDefaults(Notification.DEFAULT_SOUND)
-				.setVibrate(new long[] { 500, 500, 500, 500 })
-				.setLights(Color.BLUE, 500, 500).setAutoCancel(true)
-				.setSmallIcon(R.drawable.ic_launcher);
-		
+				.setSmallIcon(R.drawable.ic_unlocked);
+
 		builder.setOngoing(true);
 		builder.setPriority(NotificationCompat.PRIORITY_MIN);
-		
-		NotificationCompat.BigTextStyle bigTextStyle  = new NotificationCompat.BigTextStyle();
-		bigTextStyle.setBigContentTitle("Pebble Unlock"); 
-		bigTextStyle.bigText("Your Pebble is currently connected.  Passcode disabled.");
+
+		NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
+		bigTextStyle.setBigContentTitle("Pebble Unlock");
+		bigTextStyle
+				.bigText("Your Pebble is currently connected.  Passcode disabled.");
 		builder.setStyle(bigTextStyle);
 
 		Notification notification = builder.build();
@@ -58,6 +56,5 @@ public class PebbleConnectedReceiver extends PebbleUnlockReceiver {
 
 		notificationManager.notify(0, notification);
 	}
- 
- 
+
 }
