@@ -30,4 +30,8 @@ public class PebbleUnlockApp extends Application {
 	public void setEnabled(boolean enabled) {
 		mPrefs.edit().putBoolean(getString(R.string.pref_key_enable), enabled).commit();
 	}
+	
+	public String getPassword() {
+		return mPrefs.getString(getString(R.string.pref_key_password), "");
+	}
 }

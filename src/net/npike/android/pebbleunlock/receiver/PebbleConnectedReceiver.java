@@ -1,7 +1,7 @@
 package net.npike.android.pebbleunlock.receiver;
 
 import net.npike.android.pebbleunlock.R;
-import net.npike.android.pebbleunlock.activity.MainActivity;
+import net.npike.android.pebbleunlock.activity.PrefActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,7 +23,7 @@ public class PebbleConnectedReceiver extends PebbleUnlockReceiver {
 		long when = System.currentTimeMillis();
 
 		// Package intent with Alert string data set.
-		Intent notificationIntent = new Intent(context, MainActivity.class);
+		Intent notificationIntent = new Intent(context, PrefActivity.class);
 		notificationIntent.setAction(Intent.ACTION_VIEW);
 
 

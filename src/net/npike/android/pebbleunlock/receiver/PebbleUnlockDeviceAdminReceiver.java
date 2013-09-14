@@ -2,10 +2,7 @@ package net.npike.android.pebbleunlock.receiver;
 
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
 import net.npike.android.pebbleunlock.R;
-import net.npike.android.pebbleunlock.R.string;
 import android.app.admin.DeviceAdminReceiver;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -18,7 +15,7 @@ import android.widget.Toast;
  * All callbacks are on the UI thread and your implementations should not engage
  * in any blocking operations, including disk I/O.
  */
-public class DeviceAdminSampleReceiver extends DeviceAdminReceiver {
+public class PebbleUnlockDeviceAdminReceiver extends DeviceAdminReceiver {
 	private static final String TAG = "DeviceAdminSampleReceiver";
 
 	void showToast(Context context, String msg) {
@@ -67,16 +64,6 @@ public class DeviceAdminSampleReceiver extends DeviceAdminReceiver {
 
 	@Override
 	public void onPasswordExpiring(Context context, Intent intent) {
-		DevicePolicyManager dpm = (DevicePolicyManager) context
-				.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		long expr = dpm.getPasswordExpiration(new ComponentName(context,
-				DeviceAdminSampleReceiver.class));
-		long delta = expr - System.currentTimeMillis();
-		boolean expired = delta < 0L;
-		String message = context
-				.getString(expired ? R.string.expiration_status_past
-						: R.string.expiration_status_future);
-		showToast(context, message);
-		Log.v(TAG, message);
+		
 	}
 }
