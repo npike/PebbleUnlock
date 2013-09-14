@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <SwitchPreference
+        android:key="@string/pref_key_enable"
+        android:title="Enable Pebble Unlock" />
+
+    <PreferenceCategory android:title="Password" >
+        <ListPreference
+            android:dependency="enable_pebble_unlock"
+            android:entries="@array/password_types"
+            android:entryValues="@array/password_types"
+            android:key="password_quality"
+            android:title="Password type" />
+
+        <EditTextPreference
+            android:dependency="enable_pebble_unlock"
+            android:inputType="textPassword"
+            android:key="password"
+            android:title="Password" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="About" >
+        <Preference
+            android:enabled="false"
+            android:key="version"
+            android:summary=""
+            android:title="Version" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
