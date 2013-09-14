@@ -3,6 +3,7 @@ package net.npike.android.pebbleunlock.receiver;
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class PebbleDisconnectedReceiver extends PebbleUnlockReceiver {
@@ -12,12 +13,14 @@ public class PebbleDisconnectedReceiver extends PebbleUnlockReceiver {
 	public void onPebbleAction(Context context, String pebbleAddress) {
 		Log.i(TAG, "Pebble disconnected " + pebbleAddress);
 
-		resetPassword(context, PebbleUnlockApp.getInstance().getPassword());
-		
-		
-		NotificationManager notificationManager = (NotificationManager) context
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.cancel(0);
+		if (!TextUtils.isEmpty(PebbleUnlockApp.getInstance().getPassword())) {
+			resetPassword(context, PebbleUnlockApp.getInstance().getPassword());
+
+			NotificationManager notificationManager = (NotificationManager) context
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(0);
+		}
+
 	}
 
 }
