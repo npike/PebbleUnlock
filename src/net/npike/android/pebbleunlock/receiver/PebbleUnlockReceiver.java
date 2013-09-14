@@ -1,14 +1,17 @@
 package net.npike.android.pebbleunlock.receiver;
 
+import net.npike.android.pebbleunlock.BuildConfig;
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 
 	private static final String EXTRA_PEBBLE_ADDRESS = "address";
+	private static final String TAG = "PebbleUnlockReceiver";
 	protected DevicePolicyManager mDevicePolicyManager;
 
 	@Override
@@ -21,6 +24,10 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 
 		if (PebbleUnlockApp.getInstance().isEnabled()) {
 			onPebbleAction(context, pebbleAddress);
+		} else {
+			if (BuildConfig.DEBUG) {
+				Log.d(TAG, "Pebble Unlock is not enabled.");
+			}
 		}
 	}
 
