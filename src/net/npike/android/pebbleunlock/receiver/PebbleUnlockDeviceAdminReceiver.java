@@ -18,7 +18,7 @@ public class PebbleUnlockDeviceAdminReceiver extends DeviceAdminReceiver {
 	private static final String TAG = "DeviceAdminSampleReceiver";
 
 	void showToast(Context context, String msg) {
-		String status = context.getString(R.string.admin_receiver_status, msg);
+		//String status = context.getString(R.string.admin_receiver_status, msg);
 		//Toast.makeText(context, status, Toast.LENGTH_SHORT).show();
 	}
 
