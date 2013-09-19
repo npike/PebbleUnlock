@@ -51,7 +51,6 @@ public class PrefActivity extends PreferenceActivity implements
 	private SwitchPreference mSwitchPreferenceEnable;
 	private boolean mIgnoreNextEnableRequest = false;
 
-
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,14 +63,14 @@ public class PrefActivity extends PreferenceActivity implements
 
 		addPreferencesFromResource(R.xml.preferences);
 
-		Preference version = getPreferenceManager().findPreference("version");
+		Preference version = getPreferenceManager().findPreference(
+				getString(R.string.pref_key_version));
 
 		try {
-			PackageInfo pInfo = getPackageManager().getPackageInfo(
+			PackageInfo packageInfo = getPackageManager().getPackageInfo(
 					getPackageName(), 0);
-			String versionString = pInfo.versionName + " (Build "
-					+ pInfo.versionCode + ")";
-			version.setSummary(versionString);
+			version.setSummary(getString(R.string.pref_version_summary,
+					packageInfo.versionName, packageInfo.versionCode));
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}

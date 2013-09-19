@@ -3,24 +3,24 @@
 
     <SwitchPreference
         android:key="@string/pref_key_enable"
-        android:switchTextOff="Off"
-        android:switchTextOn="On"
-        android:title="Pebble Unlock" />
+        android:switchTextOff="@string/pref_enable_off"
+        android:switchTextOn="@string/pref_enable_on"
+        android:title="@string/app_name" />
 
-    <PreferenceCategory android:title="Password" >
+    <PreferenceCategory android:title="@string/pref_category_password" >
         <EditTextPreference
             android:dependency="enable_pebble_unlock"
             android:inputType="textPassword"
             android:key="@string/pref_key_password"
-            android:summary="Warning: In order to lock your device when the Pebble is disconnected, we must store your password in plaintext in the app."
-            android:title="Password" />
+            android:summary="@string/pref_password_summary"
+            android:title="@string/pref_category_password" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="About" >
+    <PreferenceCategory android:title="@string/pref_category_about" >
         <Preference
             android:enabled="false"
-            android:key="version"
+            android:key="@string/pref_key_version"
             android:summary=""
-            android:title="Version" />
+            android:title="@string/pref_version" />
     </PreferenceCategory>
 
 </PreferenceScreen>
