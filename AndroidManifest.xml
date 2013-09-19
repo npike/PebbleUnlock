@@ -9,8 +9,8 @@
         android:targetSdkVersion="18" />
 
     <application
-        android:allowBackup="true"
         android:name="net.npike.android.pebbleunlock.PebbleUnlockApp"
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -36,7 +36,7 @@
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
-        </receiver> 
+        </receiver>
         <receiver android:name="net.npike.android.pebbleunlock.receiver.PebbleConnectedReceiver" >
             <intent-filter>
                 <action android:name="com.getpebble.action.PEBBLE_CONNECTED" />
@@ -47,6 +47,13 @@
                 <action android:name="com.getpebble.action.PEBBLE_DISCONNECTED" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name="net.npike.android.pebbleunlock.provider.LogProvider"
+            android:authorities="net.npike.android.pebbleunlock"
+            android:exported="false" >
+            <grant-uri-permission android:pathPattern=".*" />
+        </provider>
     </application>
 
 </manifest>
