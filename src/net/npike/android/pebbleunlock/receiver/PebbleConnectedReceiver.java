@@ -1,5 +1,6 @@
 package net.npike.android.pebbleunlock.receiver;
 
+import net.npike.android.pebbleunlock.BuildConfig;
 import net.npike.android.pebbleunlock.R;
 import net.npike.android.pebbleunlock.activity.PrefActivity;
 import android.app.Notification;
@@ -15,7 +16,9 @@ public class PebbleConnectedReceiver extends PebbleUnlockReceiver {
 
 	@Override
 	public void onPebbleAction(Context context, String pebbleAddress) {
-		Log.d(TAG, "Pebble " + pebbleAddress + " connected.");
+		if (BuildConfig.DEBUG) {
+			Log.d(TAG, "Pebble " + pebbleAddress + " connected.");
+		}
 
 		resetPassword(context, "");
 
@@ -34,9 +37,9 @@ public class PebbleConnectedReceiver extends PebbleUnlockReceiver {
 
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(
 				context)
-				.setContentTitle("Pebble Unlock")
+				.setContentTitle(context.getString(R.string.app_name))
 				.setContentText(
-						"Your Pebble is currently connected.  Passcode disabled.")
+						context.getString(R.string.notification_pebble_connected_text))
 				.setWhen(when).setContentIntent(pendingIntent)
 				.setSmallIcon(R.drawable.ic_unlocked);
 
@@ -44,9 +47,9 @@ public class PebbleConnectedReceiver extends PebbleUnlockReceiver {
 		builder.setPriority(NotificationCompat.PRIORITY_MIN);
 
 		NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-		bigTextStyle.setBigContentTitle("Pebble Unlock");
-		bigTextStyle
-				.bigText("Your Pebble is currently connected.  Passcode disabled.");
+		bigTextStyle.setBigContentTitle(context.getString(R.string.app_name));
+		bigTextStyle.bigText(context
+				.getString(R.string.notification_pebble_connected_text));
 		builder.setStyle(bigTextStyle);
 
 		Notification notification = builder.build();

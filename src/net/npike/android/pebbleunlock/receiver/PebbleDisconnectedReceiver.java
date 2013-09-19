@@ -1,5 +1,6 @@
 package net.npike.android.pebbleunlock.receiver;
 
+import net.npike.android.pebbleunlock.BuildConfig;
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -11,7 +12,9 @@ public class PebbleDisconnectedReceiver extends PebbleUnlockReceiver {
 
 	@Override
 	public void onPebbleAction(Context context, String pebbleAddress) {
-		Log.i(TAG, "Pebble disconnected " + pebbleAddress);
+		if (BuildConfig.DEBUG) {
+			Log.i(TAG, "Pebble disconnected " + pebbleAddress);
+		}
 
 		if (!TextUtils.isEmpty(PebbleUnlockApp.getInstance().getPassword())) {
 			resetPassword(context, PebbleUnlockApp.getInstance().getPassword());

@@ -4,7 +4,6 @@ import net.npike.android.pebbleunlock.BuildConfig;
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -14,7 +13,6 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 	private static final String EXTRA_PEBBLE_ADDRESS = "address";
 	private static final String TAG = "PebbleUnlockReceiver";
 	protected DevicePolicyManager mDevicePolicyManager;
-	private ComponentName mDeviceAdminSample;
 
 	@Override
 	final public void onReceive(Context context, Intent intent) {
@@ -36,19 +34,16 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 	public abstract void onPebbleAction(Context context, String pebbleAddress);
 
 	protected void resetPassword(Context context, String newPassword) {
-		mDeviceAdminSample = new ComponentName(context,
-				PebbleUnlockDeviceAdminReceiver.class);
-//		mDevicePolicyManager.setPasswordQuality(mDeviceAdminSample,
-//				DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
-//		mDevicePolicyManager.setMaximumTimeToLock(mDeviceAdminSample,
-//				1);
+
 		boolean result = mDevicePolicyManager.resetPassword(newPassword,
 				DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY);
 
-		if (result) {
-			Log.d(TAG, "password changed.");
-		} else {
-			Log.d(TAG, "password not changed.");
+		if (BuildConfig.DEBUG) {
+			if (result) {
+				Log.d(TAG, "password changed.");
+			} else {
+				Log.d(TAG, "password not changed.");
+			}
 		}
 	}
 }

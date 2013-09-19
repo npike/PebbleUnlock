@@ -5,7 +5,6 @@ import net.npike.android.pebbleunlock.R;
 import android.app.admin.DeviceAdminReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 /**
  * Sample implementation of a DeviceAdminReceiver. Your controller must provide
@@ -15,7 +14,6 @@ import android.util.Log;
  * in any blocking operations, including disk I/O.
  */
 public class PebbleUnlockDeviceAdminReceiver extends DeviceAdminReceiver {
-	private static final String TAG = "DeviceAdminSampleReceiver";
 
 	void showToast(Context context, String msg) {
 		//String status = context.getString(R.string.admin_receiver_status, msg);
@@ -31,7 +29,6 @@ public class PebbleUnlockDeviceAdminReceiver extends DeviceAdminReceiver {
 
 	@Override
 	public CharSequence onDisableRequested(Context context, Intent intent) {
-		Log.d(TAG, "onDisableRequested");
 		return context
 				.getString(R.string.admin_receiver_status_disable_warning);
 	}

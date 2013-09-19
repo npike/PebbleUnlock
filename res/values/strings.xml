@@ -20,5 +20,6 @@
     <string name="pref_key_enable">enable_pebble_unlock</string>
     <string name="pref_key_password_quality">password_quality</string>
     <string name="pref_key_password">password</string>
+    <string name="notification_pebble_connected_text">Your Pebble is currently connected.  Passcode disabled.</string>
 
 </resources>
