@@ -28,5 +28,6 @@
     <string name="title_activity_log">Connection Log</string>
     <string name="log_connected">Pebble connected.  Device unlocked.</string>
     <string name="log_disconnected">Pebble disconnected.  Device locked.</string>
+    <string name="log_no_connection_events_to_show">No connection events to show.</string>
 
 </resources>

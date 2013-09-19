@@ -41,16 +41,12 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="net.npike.android.pebbleunlock.receiver.PebbleConnectedReceiver"
-            android:exported="false" >
+        <receiver android:name="net.npike.android.pebbleunlock.receiver.PebbleConnectedReceiver" >
             <intent-filter>
                 <action android:name="com.getpebble.action.PEBBLE_CONNECTED" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="net.npike.android.pebbleunlock.receiver.PebbleDisconnectedReceiver"
-            android:exported="false" >
+        <receiver android:name="net.npike.android.pebbleunlock.receiver.PebbleDisconnectedReceiver" >
             <intent-filter>
                 <action android:name="com.getpebble.action.PEBBLE_DISCONNECTED" />
             </intent-filter>

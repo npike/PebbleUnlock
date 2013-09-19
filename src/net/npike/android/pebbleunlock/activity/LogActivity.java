@@ -28,7 +28,7 @@ public class LogActivity extends Activity implements LoaderCallbacks<Cursor> {
 		setContentView(R.layout.activity_log);
 
 		mListView = (ListView) findViewById(R.id.listView);
-
+		mListView.setEmptyView(findViewById(android.R.id.empty));
 		mAdapter = new ConnectionEventAdapter(this,
 				R.layout.item_connection_event);
 		mListView.setAdapter(mAdapter);
