@@ -21,6 +21,15 @@
             android:key="@string/pref_key_version"
             android:summary=""
             android:title="@string/pref_version" />
+        <Preference 
+            android:key="foo"
+            android:summary=""
+            android:title="Connection Log" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="net.npike.android.pebbleunlock.activity.LogActivity"
+                android:targetPackage="net.npike.android.pebbleunlock" />
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

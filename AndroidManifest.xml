@@ -23,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="net.npike.android.pebbleunlock.activity.LogActivity"
+            android:label="@string/title_activity_log" >
+        </activity>
 
         <receiver
             android:name="net.npike.android.pebbleunlock.receiver.PebbleUnlockDeviceAdminReceiver"

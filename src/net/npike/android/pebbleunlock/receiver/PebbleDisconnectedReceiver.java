@@ -11,7 +11,7 @@ public class PebbleDisconnectedReceiver extends PebbleUnlockReceiver {
 	private static final String TAG = "PebbleDisconnectedReceiver";
 
 	@Override
-	public void onPebbleAction(Context context, String pebbleAddress) {
+	public boolean onPebbleAction(Context context, String pebbleAddress) {
 		if (BuildConfig.DEBUG) {
 			Log.i(TAG, "Pebble disconnected " + pebbleAddress);
 		}
@@ -23,6 +23,8 @@ public class PebbleDisconnectedReceiver extends PebbleUnlockReceiver {
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.cancel(0);
 		}
+		
+		return false;
 
 	}
 

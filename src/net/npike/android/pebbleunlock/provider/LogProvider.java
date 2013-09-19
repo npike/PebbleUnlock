@@ -38,7 +38,7 @@ public class LogProvider extends ContentProvider {
 		/**
 		 * The database that the provider uses as its underlying data store
 		 */
-		private static final String DATABASE_NAME = "alerts.db";
+		private static final String DATABASE_NAME = "log.db";
 		/**
 		 * The database version
 		 */
@@ -72,7 +72,7 @@ public class LogProvider extends ContentProvider {
 					+ " (" + BaseColumns._ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ LogContract.ConnectionEvent.COLUMN_NAME_CONNECTED
-					+ " TEXT, " + LogContract.ConnectionEvent.COLUMN_NAME_TIME
+					+ " INTEGER default 0, " + LogContract.ConnectionEvent.COLUMN_NAME_TIME
 					+ " INTEGER " + ");");
 
 		}
@@ -111,10 +111,10 @@ public class LogProvider extends ContentProvider {
 	private static UriMatcher buildUriMatcher() {
 		final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-		matcher.addURI(LogContract.AUTHORITY, "connectionevent",
+		matcher.addURI(LogContract.AUTHORITY, "connection_events",
 				LogProvider.CONNECTION_EVENT);
 
-		matcher.addURI(LogContract.AUTHORITY, "connectionevent/#",
+		matcher.addURI(LogContract.AUTHORITY, "connection_events/#",
 				LogProvider.CONNETION_EVENT_ID);
 
 		return matcher;
