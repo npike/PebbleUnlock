@@ -15,6 +15,12 @@ public class PebbleDisconnectedReceiver extends PebbleUnlockReceiver {
 		if (BuildConfig.DEBUG) {
 			Log.i(TAG, "Pebble disconnected " + pebbleAddress);
 		}
+		
+		if (getIntent().hasExtra(EXTRA_LOST_CONNECTION)) {
+			if (BuildConfig.DEBUG) {
+				Log.d(TAG, "Locking device due to lost connection detection.");
+			}
+		}
 
 		if (!TextUtils.isEmpty(PebbleUnlockApp.getInstance().getPassword())) {
 			resetPassword(context, PebbleUnlockApp.getInstance().getPassword());

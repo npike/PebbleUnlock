@@ -52,12 +52,25 @@
             </intent-filter>
         </receiver>
 
+ 
         <provider
             android:name="net.npike.android.pebbleunlock.provider.LogProvider"
             android:authorities="net.npike.android.pebbleunlock"
             android:exported="false" >
             <grant-uri-permission android:pathPattern=".*" />
         </provider>
+ 
+        <service
+            android:name="net.npike.android.pebbleunlock.service.PebbleUnlockAccessibilityService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/serviceconfig" />
+ 
     </application>
 
 </manifest>
