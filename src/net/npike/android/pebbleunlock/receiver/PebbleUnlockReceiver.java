@@ -12,13 +12,18 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 
 	private static final String EXTRA_PEBBLE_ADDRESS = "address";
 	private static final String TAG = "PebbleUnlockReceiver";
+	public static final String EXTRA_LOST_CONNECTION = "LOST_CONNECTION";
+	
 	protected DevicePolicyManager mDevicePolicyManager;
+	private Intent mIntent;
 
 	@Override
 	final public void onReceive(Context context, Intent intent) {
 		// Prepare to work with the DPM
 		mDevicePolicyManager = (DevicePolicyManager) context
 				.getSystemService(Context.DEVICE_POLICY_SERVICE);
+		mIntent = intent;
+		
 		final String pebbleAddress = intent
 				.getStringExtra(EXTRA_PEBBLE_ADDRESS);
 
@@ -29,6 +34,10 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 				Log.d(TAG, "Pebble Unlock is not enabled.");
 			}
 		}
+	}
+	
+	protected Intent getIntent() {
+		return mIntent;
 	}
 
 	public abstract void onPebbleAction(Context context, String pebbleAddress);
