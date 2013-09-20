@@ -71,9 +71,9 @@ public class LogProvider extends ContentProvider {
 			db.execSQL("CREATE TABLE " + LogContract.ConnectionEvent.TABLE_NAME
 					+ " (" + BaseColumns._ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ LogContract.ConnectionEvent.COLUMN_NAME_CONNECTED
-					+ " INTEGER default 0, " + LogContract.ConnectionEvent.COLUMN_NAME_TIME
-					+ " INTEGER " + ");");
+					+ LogContract.ConnectionEvent.COLUMN_NAME_CONNECTED + " INTEGER default 0, " 
+					+ LogContract.ConnectionEvent.COLUMN_NAME_MESSAGE + " TEXT, " 
+					+ LogContract.ConnectionEvent.COLUMN_NAME_TIME + " INTEGER " + ");");
 
 		}
 
@@ -229,6 +229,9 @@ public class LogProvider extends ContentProvider {
 			allColumnProjectionMap.put(
 					LogContract.ConnectionEvent.COLUMN_NAME_TIME,
 					LogContract.ConnectionEvent.COLUMN_NAME_TIME);
+			allColumnProjectionMap.put(
+					LogContract.ConnectionEvent.COLUMN_NAME_MESSAGE,
+					LogContract.ConnectionEvent.COLUMN_NAME_MESSAGE);
 			
 
 			qb.setProjectionMap(allColumnProjectionMap);

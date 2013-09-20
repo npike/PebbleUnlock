@@ -2,6 +2,7 @@ package net.npike.android.pebbleunlock.receiver;
 
 import net.npike.android.pebbleunlock.BuildConfig;
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
+import net.npike.android.pebbleunlock.R;
 import net.npike.android.pebbleunlock.provider.LogContract;
 import android.app.admin.DevicePolicyManager;
 import android.content.AsyncQueryHandler;
@@ -36,8 +37,7 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 			cv.put(LogContract.ConnectionEvent.COLUMN_NAME_CONNECTED,
 					isConnected ? 1 : 0);
 			cv.put(LogContract.ConnectionEvent.COLUMN_NAME_TIME,
-					System.currentTimeMillis());
-
+					System.currentTimeMillis()); 
 			asyncQueryHandler.startInsert(0, null,
 					LogContract.ConnectionEvent.CONTENT_URI, cv);
 

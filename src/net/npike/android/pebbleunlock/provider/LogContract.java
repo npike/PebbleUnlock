@@ -7,6 +7,7 @@ public class LogContract {
 	public static final class ConnectionEvent implements BaseColumns {
 
 		public static final String COLUMN_NAME_CONNECTED = "connected";
+		public static final String COLUMN_NAME_MESSAGE = "message";
 		public static final String COLUMN_NAME_TIME = "time"; 
 
 		/**
