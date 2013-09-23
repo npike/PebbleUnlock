@@ -9,10 +9,12 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ public class LogActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 		mListView = (ListView) findViewById(R.id.listView);
 		mListView.setEmptyView(findViewById(android.R.id.empty));
+		mListView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 		mAdapter = new ConnectionEventAdapter(this,
 				R.layout.item_connection_event);
 		mListView.setAdapter(mAdapter);
@@ -73,21 +76,30 @@ public class LogActivity extends Activity implements LoaderCallbacks<Cursor> {
 			final long logTime = cursor
 					.getLong(cursor
 							.getColumnIndex(LogContract.ConnectionEvent.COLUMN_NAME_TIME));
+			final String logMessage = cursor
+					.getString(cursor
+							.getColumnIndex(LogContract.ConnectionEvent.COLUMN_NAME_MESSAGE));
 
 			TextView textViewStatus = (TextView) view
-					.findViewById(R.id.textViewStatus);
+					.findViewById(R.id.textViewStatus); 
 			TextView textViewTime = (TextView) view
 					.findViewById(R.id.textViewTime);
 
-			if (isConnected) {
-				textViewStatus.setText(R.string.log_connected);
-			} else {
-				textViewStatus.setText(R.string.log_disconnected);
-			}
+			
 
 			textViewTime.setText(DateUtils.getRelativeDateTimeString(
 					LogActivity.this, logTime, DateUtils.SECOND_IN_MILLIS,
 					DateUtils.DAY_IN_MILLIS, 0));
+			
+			if (!TextUtils.isEmpty(logMessage)) {
+				textViewStatus.setText(logMessage);
+			} else {
+				if (isConnected) {
+					textViewStatus.setText(R.string.log_connected);
+				} else {
+					textViewStatus.setText(R.string.log_disconnected);
+				}
+			}
 		}
 
 		@Override

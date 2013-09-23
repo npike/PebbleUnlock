@@ -2,7 +2,6 @@ package net.npike.android.pebbleunlock.receiver;
 
 import net.npike.android.pebbleunlock.BuildConfig;
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
-import net.npike.android.pebbleunlock.R;
 import net.npike.android.pebbleunlock.provider.LogContract;
 import android.app.admin.DevicePolicyManager;
 import android.content.AsyncQueryHandler;
@@ -10,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
@@ -17,9 +17,10 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 	private static final String EXTRA_PEBBLE_ADDRESS = "address";
 	private static final String TAG = "PebbleUnlockReceiver";
 	public static final String EXTRA_LOST_CONNECTION = "LOST_CONNECTION";
-	
+
 	protected DevicePolicyManager mDevicePolicyManager;
 	private Intent mIntent;
+	private boolean mLastResult;
 
 	@Override
 	final public void onReceive(Context context, Intent intent) {
@@ -27,24 +28,25 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 		mDevicePolicyManager = (DevicePolicyManager) context
 				.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		mIntent = intent;
-		
+
 		final String pebbleAddress = intent
 				.getStringExtra(EXTRA_PEBBLE_ADDRESS);
 
 		if (PebbleUnlockApp.getInstance().isEnabled()) {
 			boolean isConnected = onPebbleAction(context, pebbleAddress);
 
-			AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(
-					context.getContentResolver()) {
-			};
+			String message = null;
+			if (getIntent().hasExtra(EXTRA_LOST_CONNECTION)) {
+				message = "Loss of connection detected.";
+			}
 
-			ContentValues cv = new ContentValues();
-			cv.put(LogContract.ConnectionEvent.COLUMN_NAME_CONNECTED,
-					isConnected ? 1 : 0);
-			cv.put(LogContract.ConnectionEvent.COLUMN_NAME_TIME,
-					System.currentTimeMillis()); 
-			asyncQueryHandler.startInsert(0, null,
-					LogContract.ConnectionEvent.CONTENT_URI, cv);
+			logMessage(context, isConnected, message);
+			
+			if (mLastResult) { 
+				logMessage(context, false, "Password updated.");
+			} else {
+				logMessage(context, false, "Failed to set password.");
+			}
 
 		} else {
 			if (BuildConfig.DEBUG) {
@@ -52,7 +54,24 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 			}
 		}
 	}
-	
+
+	private void logMessage(Context context, boolean isConnected, String message) {
+		AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(
+				context.getContentResolver()) {
+		};
+
+		ContentValues cv = new ContentValues();
+		cv.put(LogContract.ConnectionEvent.COLUMN_NAME_CONNECTED,
+				isConnected ? 1 : 0);
+		cv.put(LogContract.ConnectionEvent.COLUMN_NAME_TIME,
+				System.currentTimeMillis());
+		if (!TextUtils.isEmpty(message)) {
+			cv.put(LogContract.ConnectionEvent.COLUMN_NAME_MESSAGE, message);
+		}
+		asyncQueryHandler.startInsert(0, null,
+				LogContract.ConnectionEvent.CONTENT_URI, cv);
+	}
+
 	protected Intent getIntent() {
 		return mIntent;
 	}
@@ -61,13 +80,15 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 
 	protected void resetPassword(Context context, String newPassword) {
 
-		boolean result = mDevicePolicyManager.resetPassword(newPassword,
+		mLastResult = mDevicePolicyManager.resetPassword(newPassword,
 				DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY);
 
-		if (BuildConfig.DEBUG) {
-			if (result) {
+		if (mLastResult) {
+			if (BuildConfig.DEBUG) {
 				Log.d(TAG, "password changed.");
-			} else {
+			}
+		} else {
+			if (BuildConfig.DEBUG) {
 				Log.d(TAG, "password not changed.");
 			}
 		}
