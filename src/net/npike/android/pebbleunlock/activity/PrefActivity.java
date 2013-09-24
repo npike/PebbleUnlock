@@ -29,6 +29,8 @@ import android.widget.Toast;
 public class PrefActivity extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener, OnPreferenceClickListener {
 
+	private static final String TAG_PASSWORD_CHANGE_FRAG = "password_change_frag";
+
 	private OnPreferenceChangeListener mOnPreferenceChangedListenerEnabled = new OnPreferenceChangeListener() {
 
 		@Override
@@ -110,8 +112,8 @@ public class PrefActivity extends PreferenceActivity implements
 		}
 		if (key.equalsIgnoreCase(getString(R.string.pref_key_password))) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Would you like to apply this new password now?  Otherwise it will only take affect the next time your Pebble has been disconnected.");
-			builder.setPositiveButton("Yes", new OnClickListener() {
+			builder.setMessage(R.string.dialog_password_apply_now_message);
+			builder.setPositiveButton(R.string.dialog_password_apply_now_yes, new OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -119,17 +121,17 @@ public class PrefActivity extends PreferenceActivity implements
 							.getInstance().getPassword(),
 							DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY);
 					if (result) {
-						Toast.makeText(PrefActivity.this, "Password changed.",
+						Toast.makeText(PrefActivity.this, R.string.dialog_password_apply_now_password_changed,
 								Toast.LENGTH_SHORT).show();
 					} else {
 						Toast.makeText(PrefActivity.this,
-								"Couldn't reset password.", Toast.LENGTH_SHORT)
+								R.string.dialog_password_apply_now_couldn_t_reset_password, Toast.LENGTH_SHORT)
 								.show();
 					}
 
 				}
 			});
-			builder.setNegativeButton("No", null);
+			builder.setNegativeButton(R.string.dialog_password_apply_now_no, null);
 			builder.show();
 		}
 	}
@@ -147,7 +149,7 @@ public class PrefActivity extends PreferenceActivity implements
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
 		if (preference == mSetPassword) {
-			PasswordChangeFragment.getInstance().show(getFragmentManager(), "password_change_frag");
+			PasswordChangeFragment.getInstance().show(getFragmentManager(), TAG_PASSWORD_CHANGE_FRAG);
 		}
 		return false;
 	}
