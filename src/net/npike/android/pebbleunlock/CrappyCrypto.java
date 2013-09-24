@@ -16,7 +16,7 @@ import javax.crypto.spec.DESKeySpec;
 import android.util.Base64;
 
 public class CrappyCrypto {
-	private static String cryptoPass = "max";
+	private static String cryptoPass = "max1musTh3d0g";
 
 	public static String encryptIt(String value) {
 		try {

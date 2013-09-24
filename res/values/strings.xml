@@ -34,4 +34,5 @@
 	<string name="dialog_change_password_not_changed">Password not changed.</string>
 	<string name="dialog_change_cancel">Cancel</string>
 	<string name="dialog_change_change">Change</string>
+	<string name="pref_key_set_password">key_set_password</string>
 </resources>

@@ -7,16 +7,10 @@
         android:switchTextOn="@string/pref_enable_on"
         android:title="@string/app_name" />
 
-    <PreferenceCategory android:title="@string/pref_category_password" >
-        <EditTextPreference
-            android:dependency="enable_pebble_unlock"
-            android:inputType="textPassword"
-            android:key="@string/pref_key_password"
-            android:summary="@string/pref_password_summary"
-            android:title="@string/pref_category_password" />
-        
+    <PreferenceCategory android:title="@string/pref_category_password" > 
         <PreferenceScreen
-            android:key="key_set_password"
+             android:dependency="enable_pebble_unlock"
+            android:key="@string/pref_key_set_password"
             android:title="@string/pref_category_password" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_category_about" >
