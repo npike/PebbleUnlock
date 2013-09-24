@@ -41,5 +41,17 @@ public class PebbleUnlockApp extends Application {
 				.putString(getString(R.string.pref_key_password),
 						CrappyCrypto.encryptIt(newPassword)).commit();
 	}
+	
+	public String getPairedPebbleAddress() {
+		return CrappyCrypto.decryptIt(mPrefs.getString(
+				getString(R.string.pref_key_pebble_address), ""));
+	}
+	
+	public void putPairedPebbleAddress(String address) {
+		// mask it because I feel like it.
+		mPrefs.edit()
+		.putString(getString(R.string.pref_key_pebble_address),
+				CrappyCrypto.encryptIt(address)).commit();
+	}
 
 }

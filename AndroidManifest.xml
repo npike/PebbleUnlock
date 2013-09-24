@@ -27,6 +27,10 @@
             android:name="net.npike.android.pebbleunlock.activity.LogActivity"
             android:label="@string/title_activity_log" >
         </activity>
+        <activity
+            android:name="net.npike.android.pebbleunlock.activity.OnboardingActivity"
+            android:label="@string/title_activity_onboarding" >
+        </activity>
 
         <receiver
             android:name="net.npike.android.pebbleunlock.receiver.PebbleUnlockDeviceAdminReceiver"
