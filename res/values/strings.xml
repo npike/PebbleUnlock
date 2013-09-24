@@ -29,4 +29,9 @@
     <string name="pref_key_version">version</string>
     <string name="pref_version">Version</string>
 	<string name="pref_version_summary">%1$s (Build %2$d)</string>
+	<string name="dialog_change_passwords_do_not_match">Passwords do not match.</string>
+	<string name="dialog_change_set_password">Set password</string>
+	<string name="dialog_change_password_not_changed">Password not changed.</string>
+	<string name="dialog_change_cancel">Cancel</string>
+	<string name="dialog_change_change">Change</string>
 </resources>

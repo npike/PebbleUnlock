@@ -14,6 +14,10 @@
             android:key="@string/pref_key_password"
             android:summary="@string/pref_password_summary"
             android:title="@string/pref_category_password" />
+        
+        <PreferenceScreen
+            android:key="key_set_password"
+            android:title="@string/pref_category_password" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_category_about" >
         <Preference
