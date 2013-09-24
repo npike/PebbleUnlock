@@ -40,6 +40,7 @@
     <string name="dialog_password_apply_now_password_changed">Password changed.</string>
     <string name="dialog_password_apply_now_couldn_t_reset_password">Couldn\'t reset password.</string>
     <string name="dialog_password_apply_now_no">No</string>
-    <string name="title_activity_onboarding">OnboardingActivity</string>
-
+    <string name="title_activity_onboarding">Setup</string>
+	<string name="pref_key_pebble_address">pebble_address</string>
+	<string name="oboarding_password_description">Pebble Unlock found a Pebble Watch (##%1$s##)</string>
 </resources>

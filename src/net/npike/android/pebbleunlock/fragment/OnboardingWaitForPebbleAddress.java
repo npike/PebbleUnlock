@@ -1,6 +1,7 @@
 package net.npike.android.pebbleunlock.fragment;
 
 import net.npike.android.pebbleunlock.OnboardingInterface;
+import net.npike.android.pebbleunlock.PebbleUnlockApp;
 import net.npike.android.pebbleunlock.R;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -40,6 +41,9 @@ public class OnboardingWaitForPebbleAddress extends Fragment {
 						"Pebble (" + pebbleAddress + ") found.",
 						Toast.LENGTH_SHORT).show();
 
+				PebbleUnlockApp.getInstance().putPairedPebbleAddress(
+						pebbleAddress);
+
 				try {
 					((OnboardingInterface) getActivity())
 							.onPebbleFound(pebbleAddress);
@@ -65,8 +69,9 @@ public class OnboardingWaitForPebbleAddress extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.frag_onboarding_waitforpebbleaddress,
-				container, false);
+		View v = inflater
+				.inflate(R.layout.frag_onboarding_waitforpebbleaddress,
+						container, false);
 		ProgressBar progressBar = (ProgressBar) v
 				.findViewById(R.id.progressBar);
 
