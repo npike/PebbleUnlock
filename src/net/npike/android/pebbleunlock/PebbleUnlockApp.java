@@ -13,25 +13,33 @@ public class PebbleUnlockApp extends Application {
 		super.onCreate();
 
 		INSTANCE = this;
-		
+
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 	}
-	
-	
+
 	public static PebbleUnlockApp getInstance() {
 		return INSTANCE;
 	}
-	
+
 	public boolean isEnabled() {
 		return mPrefs.getBoolean(getString(R.string.pref_key_enable), false);
 	}
 
 	public void setEnabled(boolean enabled) {
-		mPrefs.edit().putBoolean(getString(R.string.pref_key_enable), enabled).commit();
+		mPrefs.edit().putBoolean(getString(R.string.pref_key_enable), enabled)
+				.commit();
 	}
-	
+
 	public String getPassword() {
-		return mPrefs.getString(getString(R.string.pref_key_password), "");
+		return CrappyCrypto.decryptIt(mPrefs.getString(
+				getString(R.string.pref_key_password), ""));
 	}
+
+	public void setPassword(String newPassword) {
+		mPrefs.edit()
+				.putString(getString(R.string.pref_key_password),
+						CrappyCrypto.encryptIt(newPassword)).commit();
+	}
+
 }

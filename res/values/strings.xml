@@ -23,11 +23,16 @@
     <string name="pref_category_about">About</string>
     <string name="pref_password_summary">Warning: In order to lock your device when the Pebble is disconnected, we must store your password in plaintext in the app.</string>
     <string name="pref_key_version">version</string>
-    <string name="pref_version">Version</string>
+    <string name="pref_version">Version</string> 
     <string name="pref_version_summary">%1$s (Build %2$d)</string>
     <string name="title_activity_log">Connection Log</string>
     <string name="log_connected">Pebble connected.  Device unlocked.</string>
     <string name="log_disconnected">Pebble disconnected.  Device locked.</string>
     <string name="log_no_connection_events_to_show">No connection events to show.</string>
-
+	<string name="dialog_change_passwords_do_not_match">Passwords do not match.</string>
+	<string name="dialog_change_set_password">Set password</string>
+	<string name="dialog_change_password_not_changed">Password not changed.</string>
+	<string name="dialog_change_cancel">Cancel</string>
+	<string name="dialog_change_change">Change</string>
+	<string name="pref_key_set_password">key_set_password</string>
 </resources>

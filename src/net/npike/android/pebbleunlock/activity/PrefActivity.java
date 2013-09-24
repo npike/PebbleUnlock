@@ -3,6 +3,7 @@ package net.npike.android.pebbleunlock.activity;
 import net.npike.android.pebbleunlock.BuildConfig;
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
 import net.npike.android.pebbleunlock.R;
+import net.npike.android.pebbleunlock.fragment.PasswordChangeFragment;
 import net.npike.android.pebbleunlock.receiver.PebbleUnlockDeviceAdminReceiver;
 import android.app.AlertDialog;
 import android.app.admin.DevicePolicyManager;
@@ -18,13 +19,15 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.util.Log;
 import android.widget.Toast;
 
 public class PrefActivity extends PreferenceActivity implements
-		OnSharedPreferenceChangeListener {
+		OnSharedPreferenceChangeListener, OnPreferenceClickListener {
 
 	private OnPreferenceChangeListener mOnPreferenceChangedListenerEnabled = new OnPreferenceChangeListener() {
 
@@ -50,6 +53,8 @@ public class PrefActivity extends PreferenceActivity implements
 	private ComponentName mDeviceAdminSample;
 	private SwitchPreference mSwitchPreferenceEnable;
 	private boolean mIgnoreNextEnableRequest = false;
+
+	private PreferenceScreen mSetPassword;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -79,6 +84,10 @@ public class PrefActivity extends PreferenceActivity implements
 				.findPreference(getString(R.string.pref_key_enable));
 		mSwitchPreferenceEnable
 				.setOnPreferenceChangeListener(mOnPreferenceChangedListenerEnabled);
+		
+		mSetPassword = (PreferenceScreen) findPreference("key_set_password");
+		mSetPassword.setOnPreferenceClickListener(this);
+		
 
 		getPreferenceManager().getSharedPreferences()
 				.registerOnSharedPreferenceChangeListener(this);
@@ -133,5 +142,13 @@ public class PrefActivity extends PreferenceActivity implements
 		intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
 				getString(R.string.add_admin_extra_app_text));
 		startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN);
+	}
+
+	@Override
+	public boolean onPreferenceClick(Preference preference) {
+		if (preference == mSetPassword) {
+			PasswordChangeFragment.getInstance().show(getFragmentManager(), "password_change_frag");
+		}
+		return false;
 	}
 }
