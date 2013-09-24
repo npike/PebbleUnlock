@@ -35,4 +35,9 @@
 	<string name="dialog_change_cancel">Cancel</string>
 	<string name="dialog_change_change">Change</string>
 	<string name="pref_key_set_password">key_set_password</string>
+	<string name="dialog_password_apply_now_message">Would you like to apply this new password now?  Otherwise it will only take affect the next time your Pebble has been disconnected.</string>
+	<string name="dialog_password_apply_now_yes">Yes</string>
+	<string name="dialog_password_apply_now_password_changed">Password changed.</string>
+	<string name="dialog_password_apply_now_couldn_t_reset_password">Couldn\'t reset password.</string>
+	<string name="dialog_password_apply_now_no">No</string>
 </resources>
