@@ -2,6 +2,7 @@ package net.npike.android.pebbleunlock.receiver;
 
 import net.npike.android.pebbleunlock.BuildConfig;
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
+import net.npike.android.pebbleunlock.provider.LogContract;
 import android.app.admin.DevicePolicyManager;
 import android.content.AsyncQueryHandler;
 import android.content.BroadcastReceiver;
