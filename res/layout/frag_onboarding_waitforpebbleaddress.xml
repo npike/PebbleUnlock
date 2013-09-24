@@ -9,23 +9,24 @@
         style="@style/puTextApperanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Connecting with your Pebble" />
+        android:text="@string/onboarding_connecting_with_your_pebble" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Is your Pebble currently turned on and connected to your phone?"
+        android:text="@string/onboarding_is_your_pebble_currently_turned_on_and_connected_to_your_phone_"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Pebble Unlock needs you to temporarily turn off the Bluetooth or power cycle your Pebble."
+        android:text="@string/onboarding_pebble_unlock_needs_you_to_temporarily_turn_off_the_bluetooth_or_power_cycle_your_pebble_"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ImageView
+        android:contentDescription="@string/onboarding_waiting_for_pebble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -4,11 +4,15 @@ import net.npike.android.pebbleunlock.OnboardingInterface;
 import net.npike.android.pebbleunlock.R;
 import net.npike.android.pebbleunlock.fragment.OnboardingConfigurePasswordFragment;
 import net.npike.android.pebbleunlock.fragment.OnboardingRequestDeviceAdminFragment;
-import net.npike.android.pebbleunlock.fragment.OnboardingWaitForPebbleAddress;
+import net.npike.android.pebbleunlock.fragment.OnboardingWaitForPebbleAddressFragment;
 import android.app.Activity;
 import android.os.Bundle;
 
 public class OnboardingActivity extends Activity implements OnboardingInterface {
+
+	private static final String TAG_CONFIGURE_PASSWORD_FRAG = "configure_password_frag";
+	private static final String TAG_REQUEST_ADMIN_FRAG = "request_admin_frag";
+	private static final String TAG_WAIT_FOR_PEBBLE_FRAG = "wait_for_pebble_frag";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +23,8 @@ public class OnboardingActivity extends Activity implements OnboardingInterface 
 			getFragmentManager()
 					.beginTransaction()
 					.replace(R.id.fragment_placeholder,
-							OnboardingWaitForPebbleAddress.getInstance(),
-							"wait_for_pebble_frag").commit();
+							OnboardingWaitForPebbleAddressFragment.getInstance(),
+							TAG_WAIT_FOR_PEBBLE_FRAG).commit();
 		}
 	}
 
@@ -30,7 +34,7 @@ public class OnboardingActivity extends Activity implements OnboardingInterface 
 				.beginTransaction()
 				.replace(R.id.fragment_placeholder,
 						OnboardingRequestDeviceAdminFragment.getInstance(),
-						"request_admin_frag").commit();
+						TAG_REQUEST_ADMIN_FRAG).commit();
 	}
 
 	@Override
@@ -39,7 +43,7 @@ public class OnboardingActivity extends Activity implements OnboardingInterface 
 				.beginTransaction()
 				.replace(R.id.fragment_placeholder,
 						OnboardingConfigurePasswordFragment.getInstance(),
-						"configure_password_frag").commit();
+						TAG_CONFIGURE_PASSWORD_FRAG).commit();
 	}
 
 }

@@ -13,14 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-public class OnboardingWaitForPebbleAddress extends Fragment {
+public class OnboardingWaitForPebbleAddressFragment extends Fragment {
 	private static final String EXTRA_PEBBLE_ADDRESS = "address";
 	private BroadcastReceiver mReceiver;
 
-	public static OnboardingWaitForPebbleAddress getInstance() {
-		return new OnboardingWaitForPebbleAddress();
+	public static OnboardingWaitForPebbleAddressFragment getInstance() {
+		return new OnboardingWaitForPebbleAddressFragment();
 	}
 
 	@Override
@@ -36,10 +35,7 @@ public class OnboardingWaitForPebbleAddress extends Fragment {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				final String pebbleAddress = intent
-						.getStringExtra(EXTRA_PEBBLE_ADDRESS);
-				Toast.makeText(getActivity(),
-						"Pebble (" + pebbleAddress + ") found.",
-						Toast.LENGTH_SHORT).show();
+						.getStringExtra(EXTRA_PEBBLE_ADDRESS); 
 
 				PebbleUnlockApp.getInstance().putPairedPebbleAddress(
 						pebbleAddress);
