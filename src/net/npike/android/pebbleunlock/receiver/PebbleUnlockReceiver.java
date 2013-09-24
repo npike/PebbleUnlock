@@ -2,7 +2,6 @@ package net.npike.android.pebbleunlock.receiver;
 
 import net.npike.android.pebbleunlock.BuildConfig;
 import net.npike.android.pebbleunlock.PebbleUnlockApp;
-import net.npike.android.pebbleunlock.provider.LogContract;
 import android.app.admin.DevicePolicyManager;
 import android.content.AsyncQueryHandler;
 import android.content.BroadcastReceiver;
@@ -33,19 +32,32 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 				.getStringExtra(EXTRA_PEBBLE_ADDRESS);
 
 		if (PebbleUnlockApp.getInstance().isEnabled()) {
-			boolean isConnected = onPebbleAction(context, pebbleAddress);
 
-			String message = null;
-			if (getIntent().hasExtra(EXTRA_LOST_CONNECTION)) {
-				message = "Loss of connection detected.";
-			}
+			// is this the same address we captured during onboarding?
+			if (TextUtils.equals(pebbleAddress, PebbleUnlockApp.getInstance()
+					.getPairedPebbleAddress())) {
+				boolean isConnected = onPebbleAction(context, pebbleAddress);
 
-			logMessage(context, isConnected, message);
-			
-			if (mLastResult) { 
-				logMessage(context, false, "Password updated.");
+				String message = null;
+				if (getIntent().hasExtra(EXTRA_LOST_CONNECTION)) {
+					message = "Loss of connection detected.";
+				}
+
+				logMessage(context, isConnected, message);
+
+				if (mLastResult) {
+					logMessage(context, false, "Password updated.");
+				} else {
+					logMessage(context, false, "Failed to set password.");
+				}
 			} else {
-				logMessage(context, false, "Failed to set password.");
+				if (BuildConfig.DEBUG) {
+					Log.d(TAG, "Address "
+							+ pebbleAddress
+							+ " does not match address from onboard: "
+							+ PebbleUnlockApp.getInstance()
+									.getPairedPebbleAddress());
+				}
 			}
 
 		} else {
