@@ -6,6 +6,7 @@ import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
@@ -23,7 +24,14 @@ public abstract class PebbleUnlockReceiver extends BroadcastReceiver {
 				.getStringExtra(EXTRA_PEBBLE_ADDRESS);
 
 		if (PebbleUnlockApp.getInstance().isEnabled()) {
-			onPebbleAction(context, pebbleAddress);
+			// is this the same address we captured during onboarding?
+			if (TextUtils.equals(pebbleAddress, PebbleUnlockApp.getInstance().getPairedPebbleAddress())) {
+				onPebbleAction(context, pebbleAddress);
+			} else {
+				if (BuildConfig.DEBUG) {
+					Log.d(TAG, "Address "+pebbleAddress +" does not match address from onboard: "+PebbleUnlockApp.getInstance().getPairedPebbleAddress());
+				}
+			}
 		} else {
 			if (BuildConfig.DEBUG) {
 				Log.d(TAG, "Pebble Unlock is not enabled.");
