@@ -26,7 +26,6 @@
 
         <receiver
             android:name="net.npike.android.pebbleunlock.receiver.PebbleUnlockDeviceAdminReceiver"
-            android:description="@string/sample_device_admin_description"
             android:label="@string/sample_device_admin"
             android:permission="android.permission.BIND_DEVICE_ADMIN" >
             <meta-data
