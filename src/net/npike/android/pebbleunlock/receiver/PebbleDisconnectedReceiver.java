@@ -11,9 +11,15 @@ public class PebbleDisconnectedReceiver extends PebbleUnlockReceiver {
 	private static final String TAG = "PebbleDisconnectedReceiver";
 
 	@Override
-	public void onPebbleAction(Context context, String pebbleAddress) {
+	public boolean onPebbleAction(Context context, String pebbleAddress) {
 		if (BuildConfig.DEBUG) {
 			Log.i(TAG, "Pebble disconnected " + pebbleAddress);
+		}
+		
+		if (getIntent().hasExtra(EXTRA_LOST_CONNECTION)) {
+			if (BuildConfig.DEBUG) {
+				Log.d(TAG, "Locking device due to lost connection detection.");
+			}
 		}
 
 		if (!TextUtils.isEmpty(PebbleUnlockApp.getInstance().getPassword())) {
@@ -23,6 +29,8 @@ public class PebbleDisconnectedReceiver extends PebbleUnlockReceiver {
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.cancel(0);
 		}
+		
+		return false;
 
 	}
 

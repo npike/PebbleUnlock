@@ -40,7 +40,10 @@ public class PrefActivity extends PreferenceActivity implements
 				return true;
 			}
 			if ((Boolean) newValue) {
-				requestAdmin();
+				Intent launchIntent = new Intent(PrefActivity.this,
+						OnboardingActivity.class);
+				startActivity(launchIntent);
+				// requestAdmin();
 			} else {
 				mDPM.removeActiveAdmin(mDeviceAdminSample);
 				return true;
@@ -50,7 +53,6 @@ public class PrefActivity extends PreferenceActivity implements
 	};
 
 	private static final String TAG = "PrefActivity";
-	private static final int REQUEST_CODE_ENABLE_ADMIN = 1;
 	private DevicePolicyManager mDPM;
 	private ComponentName mDeviceAdminSample;
 	private SwitchPreference mSwitchPreferenceEnable;
@@ -86,23 +88,12 @@ public class PrefActivity extends PreferenceActivity implements
 				.findPreference(getString(R.string.pref_key_enable));
 		mSwitchPreferenceEnable
 				.setOnPreferenceChangeListener(mOnPreferenceChangedListenerEnabled);
-		
+
 		mSetPassword = (PreferenceScreen) findPreference("key_set_password");
 		mSetPassword.setOnPreferenceClickListener(this);
-		
 
 		getPreferenceManager().getSharedPreferences()
 				.registerOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_CODE_ENABLE_ADMIN) {
-			if (resultCode == -1) {
-				mIgnoreNextEnableRequest = true;
-				mSwitchPreferenceEnable.setChecked(true);
-			}
-		}
 	}
 
 	@Override
@@ -113,43 +104,46 @@ public class PrefActivity extends PreferenceActivity implements
 		if (key.equalsIgnoreCase(getString(R.string.pref_key_password))) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.dialog_password_apply_now_message);
-			builder.setPositiveButton(R.string.dialog_password_apply_now_yes, new OnClickListener() {
+			builder.setPositiveButton(R.string.dialog_password_apply_now_yes,
+					new OnClickListener() {
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					boolean result = mDPM.resetPassword(PebbleUnlockApp
-							.getInstance().getPassword(),
-							DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY);
-					if (result) {
-						Toast.makeText(PrefActivity.this, R.string.dialog_password_apply_now_password_changed,
-								Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(PrefActivity.this,
-								R.string.dialog_password_apply_now_couldn_t_reset_password, Toast.LENGTH_SHORT)
-								.show();
-					}
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							boolean result = mDPM
+									.resetPassword(
+											PebbleUnlockApp.getInstance()
+													.getPassword(),
+											DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY);
+							if (result) {
+								Toast.makeText(
+										PrefActivity.this,
+										R.string.dialog_password_apply_now_password_changed,
+										Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(
+										PrefActivity.this,
+										R.string.dialog_password_apply_now_couldn_t_reset_password,
+										Toast.LENGTH_SHORT).show();
+							}
 
-				}
-			});
-			builder.setNegativeButton(R.string.dialog_password_apply_now_no, null);
+						}
+					});
+			builder.setNegativeButton(R.string.dialog_password_apply_now_no,
+					null);
 			builder.show();
+		} else if (key.equalsIgnoreCase(getString(R.string.pref_key_enable))) {
+			if (PebbleUnlockApp.getInstance().isEnabled()) {
+				mIgnoreNextEnableRequest = true;
+				mSwitchPreferenceEnable.setChecked(true);
+			}
 		}
-	}
-
-	private void requestAdmin() {
-		// Launch the activity to have the user enable our admin.
-		Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-		intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,
-				mDeviceAdminSample);
-		intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-				getString(R.string.add_admin_extra_app_text));
-		startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN);
 	}
 
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
 		if (preference == mSetPassword) {
-			PasswordChangeFragment.getInstance().show(getFragmentManager(), TAG_PASSWORD_CHANGE_FRAG);
+			PasswordChangeFragment.getInstance().show(getFragmentManager(),
+					TAG_PASSWORD_CHANGE_FRAG);
 		}
 		return false;
 	}

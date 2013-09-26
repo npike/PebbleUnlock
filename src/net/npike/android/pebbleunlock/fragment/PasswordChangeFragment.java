@@ -34,6 +34,25 @@ public class PasswordChangeFragment extends DialogFragment {
 
 		View view = inflater
 				.inflate(R.layout.frag_password_change, null, false);
+		bindView(view);
+
+		builder.setView(view);
+		builder.setTitle(R.string.dialog_change_set_password);
+		builder.setPositiveButton(R.string.dialog_change_change,
+				new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						handlePasswordConfirm();
+
+					}
+				});
+		builder.setNegativeButton(R.string.dialog_change_cancel, null);
+
+		return builder.create();
+	}
+
+	protected void bindView(View view) {
 		mEditTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
 		mEditTextPasswordConfirm = (EditText) view
 				.findViewById(R.id.editTextPasswordConfirm);
@@ -47,8 +66,12 @@ public class PasswordChangeFragment extends DialogFragment {
 				if (mEditTextPassword.getText().toString()
 						.equals(mEditTextPasswordConfirm.getText().toString())) {
 					mTextViewPasswordStatus.setText("");
+					
+					onPasswordChange(true);
 				} else {
-					mTextViewPasswordStatus.setText(R.string.dialog_change_passwords_do_not_match);
+					mTextViewPasswordStatus
+							.setText(R.string.dialog_change_passwords_do_not_match);
+					onPasswordChange(false);
 
 				}
 
@@ -69,31 +92,25 @@ public class PasswordChangeFragment extends DialogFragment {
 			}
 
 		});
+	}
+	
+	protected void onPasswordChange(boolean confirmed) {
+		
+	}
 
-		builder.setView(view);
-		builder.setTitle(R.string.dialog_change_set_password);
-		builder.setPositiveButton(R.string.dialog_change_change, new OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// Do the passwords actually match?
-				if (mEditTextPassword.getText().toString()
-						.equals(mEditTextPasswordConfirm.getText().toString())
-						&& !TextUtils.isEmpty(mEditTextPassword.getText()
-								.toString())
-						&& !TextUtils.isEmpty(mEditTextPasswordConfirm
-								.getText().toString())) {
-					PebbleUnlockApp.getInstance().setPassword(
-							mEditTextPassword.getText().toString());
-				} else {
-					Toast.makeText(getActivity(), R.string.dialog_change_password_not_changed,
-							Toast.LENGTH_SHORT).show();
-				}
-
-			}
-		});
-		builder.setNegativeButton(R.string.dialog_change_cancel, null);
-
-		return builder.create();
+	protected void handlePasswordConfirm() {
+		// Do the passwords actually match?
+		if (mEditTextPassword.getText().toString()
+				.equals(mEditTextPasswordConfirm.getText().toString())
+				&& !TextUtils.isEmpty(mEditTextPassword.getText().toString())
+				&& !TextUtils.isEmpty(mEditTextPasswordConfirm.getText()
+						.toString())) {
+			PebbleUnlockApp.getInstance().setPassword(
+					mEditTextPassword.getText().toString());
+		} else {
+			Toast.makeText(getActivity(),
+					R.string.dialog_change_password_not_changed,
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 }
